@@ -1,0 +1,22 @@
+﻿<Application x:Class="Instashop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:Instashop.MVVM.ViewModels"
+             xmlns:views="clr-namespace:Instashop.MVVM.Views"
+             xmlns:converter="clr-namespace:Instashop.Converters">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type TypeName=viewModels:LoginViewModel}">
+            <views:LoginView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type TypeName=viewModels:ProductsViewModel}">
+            <views:ProductsView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type TypeName=viewModels:SalesViewModel}">
+            <views:SalesView />
+        </DataTemplate>
+
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Application.Resources>
+</Application>
