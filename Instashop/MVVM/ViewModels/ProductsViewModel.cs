@@ -117,6 +117,13 @@ public class ProductsViewModel : BaseViewModel
         : base(storeManager, navService)
     {
         ClearSelectionButtonText = "Clear ()";
+        Messenger.ProductListChanged += _messenger_ProductListChanged;
+    }
+
+    private void _messenger_ProductListChanged(object? sender, Messages.ProductListChangedMessage e)
+    {
+        if (e.Products != null)
+            Products = new ObservableCollection<Product>(e.Products);
     }
 
     #region commands

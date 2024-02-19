@@ -14,8 +14,6 @@ public class Product
     {
         if (obj == null) return false;
 
-        if (!ReferenceEquals(this, obj)) return false;
-
         if (obj.GetType() != this.GetType()) return false;
 
         var other = obj as Product;

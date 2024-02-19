@@ -1,4 +1,5 @@
-﻿using Instashop.Handlers.API.Login;
+﻿using Instashop.Core;
+using Instashop.Handlers.API.Login;
 using Instashop.Handlers.API.Products;
 using Instashop.Handlers.Repo.Products;
 using Instashop.MVVM.Models;
@@ -98,9 +99,9 @@ public class StoreManager : IStoreManager
             List<Product> productsToUpdate = new List<Product>();
             if (commonProducts.Any())
             {
-                foreach (var product in commonProducts)
+                foreach (var product in apiResponse.Data)
                 {
-                    if (!product.Equals(_products.FirstOrDefault(pr => pr.Id == product.Id)))
+                    if (!product.Equals(commonProducts.FirstOrDefault(pr => pr.Id == product.Id)))
                     {
                         productsToUpdate.Add(product);
                     }
@@ -124,6 +125,11 @@ public class StoreManager : IStoreManager
             var repoResponse = await _mediator.Send(repoRequest);
 
             _products = _products = repoResponse.Data != null ? new List<Product>(repoResponse.Data) : new List<Product>();
+
+            if (productsToUpdate.Any() || newProducts.Any())
+            {
+                Messenger.SendProductListChangedMessage(new Messages.ProductListChangedMessage { Products = new List<Product>(_products) });
+            }
         }
     }
     #endregion
