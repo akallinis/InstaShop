@@ -6,9 +6,9 @@ namespace Instashop.MVVM.ViewModels;
 
 public class MainWindowViewModel : BaseViewModel
 {
-    public MainWindowViewModel(IMediator mediator, INavigationService navService)
-        : base(mediator, navService)
+    public MainWindowViewModel(IStoreManager storeManager, INavigationService navService)
+        : base(storeManager, navService)
     {
-        //NavService.NavigateTo<LoginViewModel>();
+        NavService.NavigateTo<LoginViewModel>();
     }
 }

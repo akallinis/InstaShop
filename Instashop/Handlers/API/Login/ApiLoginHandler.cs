@@ -26,14 +26,14 @@ public class ApiLoginHandler : IRequestHandler<ApiLoginRequest, ApiLoginResponse
 
                 var response = HandlerResponseFactory.CreateFromSingle(result, r => (r as DataResult<LoginData>)?.Data);
 
-                return Task.FromResult(new ApiLoginResponse { Data = response.Data, Errors = response.Errors, Messages = response.Messages }).Result;
+                return new ApiLoginResponse { Data = response.Data, Errors = response.Errors, Messages = response.Messages };
             }
 
-            return Task.FromResult(new ApiLoginResponse { Errors = new List<IErrorResult> { new ExceptionResult(new Exception("Request non valid")) }, Messages = new List<string> { "Either username or password was not provided" } }).Result;
+            return new ApiLoginResponse { Errors = new List<IErrorResult> { new ExceptionResult(new Exception("Request non valid")) }, Messages = new List<string> { "Either username or password was not provided" } };
         }
         catch (Exception ex)
         {
-            return Task.FromResult(new ApiLoginResponse() { Errors = new List<IErrorResult> { new ExceptionResult(ex) } }).Result;
+            return new ApiLoginResponse() { Errors = new List<IErrorResult> { new ExceptionResult(ex) } };
         }
     }
 }

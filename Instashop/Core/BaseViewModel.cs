@@ -5,7 +5,7 @@ namespace Instashop.Core;
 
 public class BaseViewModel : ObservableObject
 {
-    protected readonly IMediator _mediator;
+    protected readonly IStoreManager _storeManager;
     private INavigationService _navService;
     public INavigationService NavService
     {
@@ -17,9 +17,9 @@ public class BaseViewModel : ObservableObject
         }
     }
 
-    public BaseViewModel(IMediator mediator, INavigationService navService)
+    public BaseViewModel(IStoreManager storeManager, INavigationService navService)
     {
-        _mediator = mediator;
+        _storeManager = storeManager;
         NavService = navService;
     }
 }

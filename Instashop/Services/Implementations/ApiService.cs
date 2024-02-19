@@ -1,9 +1,12 @@
-﻿using Instashop.MVVM.Models.BindingTargets;
+﻿using Instashop.MVVM.Models;
+using Instashop.MVVM.Models.BindingTargets;
 using Instashop.Services.Interfaces;
 using Shared.Responses.Factories;
 using Shared.Responses.Interfaces;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Instashop.Services.Implementations;
 
@@ -15,6 +18,7 @@ public class ApiService : IApiService
     public ApiService(HttpClient httpClient)
     {
         _httpClient = httpClient;
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
     public async Task<IDataResponse> LoginAsync(string username, string password)
@@ -22,19 +26,17 @@ public class ApiService : IApiService
         try
         {
             var content = new StringContent(
-            System.Text.Json.JsonSerializer.Serialize(
+                System.Text.Json.JsonSerializer.Serialize(
                 new { username = username, password = password }),
-            Encoding.UTF8, "application/json");
-
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync("https://instapos.azurewebsites.net/api/login", content);
 
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
-                var data = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginData>(result);
-
+                var data = JsonConvert.DeserializeObject<LoginData>(result);
+                _token = data.Token;
                 return data != null && !string.IsNullOrEmpty(data.Token) ? DataResponseFactory.CreateDataResult(data) : DataResponseFactory.CreateAuthFailedResult();
             }
 
@@ -47,24 +49,109 @@ public class ApiService : IApiService
 
     }
 
-    Task<IDataResponse> IApiService.GetProductDetails(int productId)
+    public async Task<IDataResponse> GetProductDetails(int productId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (_token != null)
+            {
+                var content = new StringContent(
+                    System.Text.Json.JsonSerializer.Serialize(
+                    new { productId = productId }),
+                    Encoding.UTF8, "application/json");
+
+                SetupHttpClient();
+
+                var response = await _httpClient.PostAsync("https://instapos.azurewebsites.net/api/fetch-product-details", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<ProductDetailsData>(result);
+
+                    return data != null ? DataResponseFactory.CreateDataResult(data) : DataResponseFactory.CreateAuthFailedResult();
+                }
+
+                return DataResponseFactory.CreateAuthFailedResult();
+            }
+
+            throw new Exception("Token expired or not obtained properly");
+        }
+        catch (Exception ex)
+        {
+            return DataResponseFactory.CreateExceptionResult(ex);
+        }
     }
 
-    Task<IDataResponse> IApiService.GetProductsAsync()
+    public async Task<IDataResponse> GetProductsAsync()
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (_token != null)
+            {
+                SetupHttpClient();
+
+                var response = await _httpClient.GetAsync("https://instapos.azurewebsites.net/api/fetch-products");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<ProductsData>(result);
+
+                    return data != null ? DataResponseFactory.CreateDataResult(data.Products) : DataResponseFactory.CreateAuthFailedResult();
+                }
+
+                return DataResponseFactory.CreateAuthFailedResult();
+            }
+
+            throw new Exception("Token expired or not obtained properly");
+        }
+        catch (Exception ex)
+        {
+            return DataResponseFactory.CreateExceptionResult(ex);
+        }
     }
 
-    Task<IDataResponse> IApiService.GetSales()
+    public async Task<IDataResponse> GetSales()
     {
-        throw new NotImplementedException();
+        try
+        {
+            SetupHttpClient();
+
+            var response = await _httpClient.GetAsync("https://instapos.azurewebsites.net/api/fetch-sales");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<Product>(result);
+
+                return data != null ? DataResponseFactory.CreateDataResult(data) : DataResponseFactory.CreateAuthFailedResult();
+            }
+
+            return DataResponseFactory.CreateAuthFailedResult();
+        }
+        catch (Exception ex)
+        {
+            return DataResponseFactory.CreateExceptionResult(ex);
+        }
     }
 
-    private bool IsLoggedIn()
+    #region helpers
+    private void SetupHttpClient()
     {
-        return _token != null;
+        if (_httpClient.DefaultRequestHeaders.TryGetValues("assignment-session-token", out var headerValues))
+        {
+            if (headerValues.Any(v => v != _token))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("assignment-session-token");
+                _httpClient.DefaultRequestHeaders.Add("assignment-session-token", _token);
+            }
+        }
+        else
+        {
+            _httpClient.DefaultRequestHeaders.Add("assignment-session-token", _token);
+        }
     }
+    #endregion
 
 }

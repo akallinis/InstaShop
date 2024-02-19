@@ -1,4 +1,5 @@
 ﻿using Instashop.Core;
+using Instashop.MVVM.ViewModels;
 using Instashop.Services.Interfaces;
 
 namespace Instashop.Services.Implementations;

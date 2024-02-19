@@ -36,14 +36,16 @@ public partial class App : Application
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<ProductsViewModel>();
+        services.AddSingleton<SalesViewModel>();
 
-
-        services.AddDbContext<InstaDbContext>();
-        services.AddSingleton<IApiService, ApiService>();
-        services.AddSingleton<INavigationService, NavigationService>();
-        services.AddSingleton<HttpClient>();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddDbContext<InstaDbContext>();
+        services.AddSingleton<IApiService, ApiService>();//call external api service
+        services.AddSingleton<IProductsRepository, ProductsRepository>();//local postgre db service
+        services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<HttpClient>();
+        services.AddSingleton<IStoreManager, StoreManager>();//wrapper service
         services.AddSingleton<Func<Type, BaseViewModel>>(provider => baseViewModelType => (BaseViewModel)provider.GetRequiredService(baseViewModelType));
     }
 

@@ -5,6 +5,17 @@
              xmlns:views="clr-namespace:Instashop.MVVM.Views"
              xmlns:converter="clr-namespace:Instashop.Converters">
     <Application.Resources>
+        <!-- Colors -->
+        <SolidColorBrush x:Key="Blue" Color="#0b51b7" />
+        <SolidColorBrush x:Key="Grey" Color="#b6c2e4" />
+        <SolidColorBrush x:Key="Light" Color="#fafbfb" />
+        <SolidColorBrush x:Key="Success" Color="#22b783" />
+        <SolidColorBrush x:Key="Info" Color="#41cbd8" />
+        <SolidColorBrush x:Key="Warning" Color="#ff9f73" />
+        <SolidColorBrush x:Key="Danger" Color="#ef4d56" />
+        <SolidColorBrush x:Key="Dark" Color="#000444" />
+
+        <!-- DataTemplates -->
         <DataTemplate DataType="{x:Type TypeName=viewModels:LoginViewModel}">
             <views:LoginView />
         </DataTemplate>
@@ -17,6 +28,121 @@
             <views:SalesView />
         </DataTemplate>
 
+        <!-- Converters -->
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converter:IntegerMinusConverter x:Key="IntegerMinusConverter" />
+
+        <!-- Styles -->
+        <Style x:Key="RounderCornerBorder" TargetType="Border">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Width" Value="180" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Grey}"/>
+            <Setter Property="Background" Value="{StaticResource Light}"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+
+        <Style x:Key="LoginTextBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="0,0,0,3"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="{StaticResource Light}"/>
+            <Setter Property="Foreground" Value="{StaticResource Dark}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="LoginLabel" TargetType="Label">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="{StaticResource Grey}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+
+        <Style x:Key="LoginBtn" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Grey}"/>
+            <Setter Property="Foreground" Value="{StaticResource Light}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource Blue}"/>
+                                <Setter Property="Foreground" Value="{StaticResource Light}"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ActiveRoundButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="AntiqueWhite"/>
+            <Setter Property="Foreground" Value="{StaticResource Blue}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="10, 10 ,0 ,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RoundButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#D3D3D3"/>
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10, 10 ,0 ,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="AntiqueWhite"/>
+                                <Setter Property="Foreground" Value="{StaticResource Blue}"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
     </Application.Resources>
 </Application>

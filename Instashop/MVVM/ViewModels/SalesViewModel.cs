@@ -10,8 +10,8 @@ public class SalesViewModel : BaseViewModel
     #region properties
     #endregion
 
-    public SalesViewModel(IMediator mediator, INavigationService navService)
-        : base(mediator, navService)
+    public SalesViewModel(IStoreManager storeManager, INavigationService navService)
+        : base(storeManager, navService)
     {
     }
 

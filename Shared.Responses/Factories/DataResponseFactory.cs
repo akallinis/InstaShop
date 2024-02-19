@@ -28,4 +28,14 @@ public static class DataResponseFactory
     {
         return new ExceptionResult(exception);
     }
+
+    public static SuccessResult CreateSuccessResult(string? message = "Data saved succesfully.")
+    {
+        return new SuccessResult(message);
+    }
+
+    public static FailResult CreateFailResult(string? message = "No data were saved.")
+    {
+        return new FailResult(message);
+    }
 }

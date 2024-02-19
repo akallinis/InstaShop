@@ -34,22 +34,18 @@ public class LoginViewModel : BaseViewModel
     }
     #endregion
 
-    public LoginViewModel(IMediator mediator, INavigationService navService)
-        : base(mediator, navService)
+    public LoginViewModel(IStoreManager storeManager, INavigationService navService)
+        : base(storeManager, navService)
     {
+        Username = "TestUser";
+        Password = "TestPassword";
     }
 
     #region commands
     public ICommand LoginCommand { get => new AsyncRelayCommand(async () => await LoginAsync()); }
     private async Task LoginAsync()
     {
-        var request = new ApiLoginRequest
-        {
-            Username = Username,
-            Password = Password,
-        };
-
-        var response = await _mediator.Send(request);
+        var response = await _storeManager.LoginAsync(Username, Password);
 
         if (response.Errors.Any())
         {

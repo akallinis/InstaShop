@@ -5,19 +5,81 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Instashop.MVVM.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <Grid Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Products" Margin="0, 0, 10, 0" Width="100"/>
-            <Button Content="Sales" Width="100" />
+
+        <StackPanel Background="{StaticResource Blue}" Grid.Row="0">
+            <Grid Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Content="Instashop" Foreground="White" FontWeight="Heavy" FontSize="20" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
+                    <Button Content="Products" Style="{StaticResource ActiveRoundButtonStyle}"  Margin="5, 5, 0, -4" />
+                    <Button Content="Sales" Style="{StaticResource RoundButtonStyle}" Command="{Binding GoToSalesCommand}" Margin="2, 5, 5, -4" />
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
+        <StackPanel Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Label Content="Products" />
+            <Border Style="{StaticResource RounderCornerBorder}"
+                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=ListView}}"
+                    Height="450">
+                <ScrollViewer Height="450" HorizontalScrollBarVisibility="Hidden">
+                    <ListView
+                      ItemsSource="{Binding Products}" 
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch" 
+                      Padding="0"
+                      Margin="0,0,10,15"
+                      BorderThickness="0"
+                      SelectedItem="{Binding SelectedProduct}"
+                      Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=StackPanel}}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource RounderCornerBorder}" Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=ListView}}">
+                                    <Grid HorizontalAlignment="Center" Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=Border}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Name}"  Grid.Column="0" FontSize="18"/>
+                                        <TextBlock Text="{Binding Price, StringFormat={}{0:0.00}}" Grid.Column="1" FontSize="18"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </ScrollViewer>
+            </Border>
+            <Button Content="{Binding ClearSelectionButtonText}" Style="{StaticResource LoginBtn}" Command="{Binding ClearSelectedProductCommand}" IsEnabled="{Binding DetailsVisible}" />
 
-        <Label Content="products" />
+            <Border Style="{StaticResource RounderCornerBorder}"
+                    Visibility="{Binding DetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=ListView}}"
+                    Height="450">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding DetailsImage}" Width="200" Height="200" />
+                        <Label Content="{Binding DetailsDescription}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>
+ 

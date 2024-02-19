@@ -1,6 +1,7 @@
-﻿namespace Instashop.MVVM.Models;
+﻿
+namespace Instashop.MVVM.Models.BindingTargets;
 
-public class ProductDetails
+public class ProductDetailsData
 {
     public string? Description { get; set; }
     public string? Packaging { get; set; }
