@@ -32,7 +32,7 @@
         <StackPanel Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Label Content="Products" />
             <Border Style="{StaticResource RounderCornerBorder}"
-                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=ListView}}"
+                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=StackPanel}}"
                     Height="450">
                 <ScrollViewer Height="450" HorizontalScrollBarVisibility="Hidden">
                     <ListView
@@ -70,11 +70,15 @@
 
             <Border Style="{StaticResource RounderCornerBorder}"
                     Visibility="{Binding DetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=ListView}}"
+                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=StackPanel}}"
                     Height="450">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding DetailsImage}" Width="200" Height="200" />
+                        <Border Style="{StaticResource RounderCornerBorder}"
+                                Width="200"
+                                Height="200">   
+                            <Image Source="{Binding DetailsImage, Converter={StaticResource UrlToImageSourceConverter}}" Width="180" />
+                        </Border>
                         <Label Content="{Binding DetailsDescription}" />
                     </StackPanel>
                 </StackPanel>

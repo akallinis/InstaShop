@@ -17,6 +17,17 @@ public class BaseViewModel : ObservableObject
         }
     }
 
+    private bool _hasBeenLoaded;
+    public bool HasBeenLoaded
+    {
+        get => _hasBeenLoaded;
+        set
+        {
+            _hasBeenLoaded = value;
+            OnPropertyChanged();
+        }
+    }
+
     public BaseViewModel(IStoreManager storeManager, INavigationService navService)
     {
         _storeManager = storeManager;

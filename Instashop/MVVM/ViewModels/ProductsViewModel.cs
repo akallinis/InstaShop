@@ -133,6 +133,7 @@ public class ProductsViewModel : BaseViewModel
         var response = await _storeManager.GetProductsAsync();
 
         Products = response.Data != null ? new ObservableCollection<Product>(response.Data) : new ObservableCollection<Product>();
+        HasBeenLoaded = true;
     }
 
     public ICommand GoToSalesCommand { get => new RelayCommand(GoToSales); }

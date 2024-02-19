@@ -29,7 +29,10 @@ namespace Instashop.MVVM.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             var vm = this.DataContext as ProductsViewModel;
-            vm?.LoadProductsCommand.Execute(vm);
+            if (!vm.HasBeenLoaded)
+            {
+                vm?.LoadProductsCommand.Execute(vm);
+            }
         }
     }
 }

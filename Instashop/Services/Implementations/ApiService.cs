@@ -42,6 +42,10 @@ public class ApiService : IApiService
 
             return DataResponseFactory.CreateAuthFailedResult();
         }
+        catch (HttpRequestException httpEx)
+        {
+            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed"));
+        }
         catch (Exception ex)
         {
             return DataResponseFactory.CreateExceptionResult(ex);
@@ -77,6 +81,10 @@ public class ApiService : IApiService
 
             throw new Exception("Token expired or not obtained properly");
         }
+        catch (HttpRequestException httpEx)
+        {
+            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed"));
+        }
         catch (Exception ex)
         {
             return DataResponseFactory.CreateExceptionResult(ex);
@@ -106,6 +114,10 @@ public class ApiService : IApiService
 
             throw new Exception("Token expired or not obtained properly");
         }
+        catch (HttpRequestException httpEx)
+        {
+            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed"));
+        }
         catch (Exception ex)
         {
             return DataResponseFactory.CreateExceptionResult(ex);
@@ -123,12 +135,16 @@ public class ApiService : IApiService
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<Product>(result);
+                var data = JsonConvert.DeserializeObject<List<Sale>>(result);
 
                 return data != null ? DataResponseFactory.CreateDataResult(data) : DataResponseFactory.CreateAuthFailedResult();
             }
 
             return DataResponseFactory.CreateAuthFailedResult();
+        }
+        catch (HttpRequestException httpEx)
+        {
+            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed"));
         }
         catch (Exception ex)
         {
