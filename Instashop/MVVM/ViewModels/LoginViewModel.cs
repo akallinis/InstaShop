@@ -56,10 +56,8 @@ public class LoginViewModel : BaseViewModel
             MessageBoxResult result;
 
             result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-            return;
         }
 
-        Console.WriteLine("We should navigate to next pages");
         NavService.NavigateTo<ProductsViewModel>();
     }
     #endregion

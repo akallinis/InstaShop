@@ -44,7 +44,7 @@ public class ApiService : IApiService
         }
         catch (HttpRequestException httpEx)
         {
-            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed"));
+            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed, continuing without connection"));
         }
         catch (Exception ex)
         {
@@ -135,9 +135,9 @@ public class ApiService : IApiService
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
-                var data = JsonConvert.DeserializeObject<List<Sale>>(result);
+                var data = JsonConvert.DeserializeObject<SalesData>(result);
 
-                return data != null ? DataResponseFactory.CreateDataResult(data) : DataResponseFactory.CreateAuthFailedResult();
+                return data != null ? DataResponseFactory.CreateDataResult(data.Sales) : DataResponseFactory.CreateAuthFailedResult();
             }
 
             return DataResponseFactory.CreateAuthFailedResult();

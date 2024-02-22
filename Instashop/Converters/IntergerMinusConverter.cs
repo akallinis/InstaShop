@@ -6,21 +6,20 @@ namespace Instashop.Converters;
 
 public class IntegerMinusConverter : IValueConverter
 {
-    private const int AMOUNT = 40;
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is double width)
+        if (value is double width && double.TryParse(parameter.ToString(), out double subtractValue))
         {
-            return width - AMOUNT;
+            return width - subtractValue;
         }
         return value;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is double width)
+        if (value is double width && double.TryParse(parameter.ToString(), out double addValue))
         {
-            return width + AMOUNT;
+            return width + addValue;
         }
         return value;
     }

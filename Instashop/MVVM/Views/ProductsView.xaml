@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Instashop.MVVM.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
+             d:DesignHeight="900" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -20,40 +20,78 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Content="Instashop" Foreground="White" FontWeight="Heavy" FontSize="20" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Label Grid.Column="1" 
+                       Content="Instashop" 
+                       Foreground="White" 
+                       FontWeight="Heavy" 
+                       FontSize="20" 
+                       Margin="5" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" />
 
-                <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
-                    <Button Content="Products" Style="{StaticResource ActiveRoundButtonStyle}"  Margin="5, 5, 0, -4" />
-                    <Button Content="Sales" Style="{StaticResource RoundButtonStyle}" Command="{Binding GoToSalesCommand}" Margin="2, 5, 5, -4" />
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="3"
+                            HorizontalAlignment="Right">
+                    <Button Content="Products"
+                            Style="{StaticResource ActiveRoundButtonStyle}"
+                            Margin="5, 5, 0, -4" />
+                    <Button Content="Sales"
+                            Style="{StaticResource RoundButtonStyle}"
+                            Command="{Binding GoToSalesCommand}"
+                            Margin="2, 5, 5, -4" />
                 </StackPanel>
             </Grid>
         </StackPanel>
 
-        <StackPanel Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="1"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch">
             <Label Content="Products" />
             <Border Style="{StaticResource RounderCornerBorder}"
-                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=StackPanel}}"
+                    Padding="0"
+                    Width="{Binding ActualWidth,
+                                    Converter={StaticResource IntegerMinusConverter},
+                                    ConverterParameter=40,
+                                    RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
                     Height="450">
-                <ScrollViewer Height="450" HorizontalScrollBarVisibility="Hidden">
                     <ListView
                       ItemsSource="{Binding Products}" 
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch" 
-                      Padding="0"
-                      Margin="0,0,10,15"
                       BorderThickness="0"
                       SelectedItem="{Binding SelectedProduct}"
-                      Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=StackPanel}}">
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                      Height="{Binding ActualHeight,
+                                Converter={StaticResource IntegerMinusConverter},
+                                ConverterParameter=20,
+                                RelativeSource={RelativeSource AncestorType={x:Type Border}}}"
+                      Width="{Binding ActualWidth,
+                                      Converter={StaticResource IntegerMinusConverter},
+                                      ConverterParameter=50,
+                                      RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
+                                      d:ItemsSource="{d:SampleData ItemCount=5}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Border Style="{StaticResource RounderCornerBorder}" Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=ListView}}">
-                                    <Grid HorizontalAlignment="Center" Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=Border}}">
+                                <Border Style="{StaticResource RoundCornerBorderListItem}" 
+                                        Width="{Binding ActualWidth, 
+                                        Converter={StaticResource IntegerMinusConverter}, 
+                                        ConverterParameter=40, 
+                                        RelativeSource={RelativeSource AncestorType={x:Type ListView}}}">
+                                    <Grid HorizontalAlignment="Center" 
+                                          Width="{Binding ActualWidth, 
+                                                          Converter={StaticResource IntegerMinusConverter},
+                                                          ConverterParameter=30,
+                                                          RelativeSource={RelativeSource AncestorType={x:Type Border}}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Name}"  Grid.Column="0" FontSize="18"/>
-                                        <TextBlock Text="{Binding Price, StringFormat={}{0:0.00}}" Grid.Column="1" FontSize="18"/>
+                                        <TextBlock Text="{Binding Name}"
+                                                   Grid.Column="0"
+                                                   FontSize="18"/>
+                                        <TextBlock Text="{Binding Price, StringFormat={}{0:0.00}}"
+                                                   Grid.Column="1"
+                                                   FontSize="18"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -64,20 +102,28 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
-                </ScrollViewer>
             </Border>
-            <Button Content="{Binding ClearSelectionButtonText}" Style="{StaticResource LoginBtn}" Command="{Binding ClearSelectedProductCommand}" IsEnabled="{Binding DetailsVisible}" />
+            <Button Content="{Binding ClearSelectionButtonText}"
+                    Style="{StaticResource LoginBtn}"
+                    Command="{Binding ClearSelectedProductCommand}"
+                    IsEnabled="{Binding DetailsVisible}" />
 
             <Border Style="{StaticResource RounderCornerBorder}"
-                    Visibility="{Binding DetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Width="{Binding ActualWidth, Converter={StaticResource IntegerMinusConverter}, RelativeSource={RelativeSource AncestorType=StackPanel}}"
+                    Visibility="{Binding DetailsVisible,
+                                         Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Width="{Binding ActualWidth, 
+                                    Converter={StaticResource IntegerMinusConverter},
+                                    ConverterParameter=40,
+                                    RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
                     Height="450">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Border Style="{StaticResource RounderCornerBorder}"
                                 Width="200"
-                                Height="200">   
-                            <Image Source="{Binding DetailsImage, Converter={StaticResource UrlToImageSourceConverter}}" Width="180" />
+                                Height="200">
+                            <Image Source="{Binding DetailsImage,
+                                            Converter={StaticResource UrlToImageSourceConverter}}" 
+                                   Width="180" />
                         </Border>
                         <Label Content="{Binding DetailsDescription}" />
                     </StackPanel>

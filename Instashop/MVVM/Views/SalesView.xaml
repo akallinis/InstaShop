@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Instashop.MVVM.Views"
+             xmlns:models="clr-namespace:Instashop.MVVM.Models"
+             xmlns:cc="clr-namespace:Instashop.Controls"
+             xmlns:b="clr-namespace:Instashop.Behaviors"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid Margin="0">
@@ -12,21 +16,78 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Background="{StaticResource Blue}" Grid.Row="0">
-            <Grid Margin="0">
+        <StackPanel Background="{StaticResource Blue}" 
+                    Grid.Row="0">
+            <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Content="Instashop" Foreground="White" FontWeight="Heavy" FontSize="20" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Label Grid.Column="1"
+                       Content="Instashop"
+                       Foreground="White"
+                       FontWeight="Heavy"
+                       FontSize="20"
+                       Margin="5"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
 
-                <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
-                    <Button Content="Products" Style="{StaticResource RoundButtonStyle}" Command="{Binding GoToProductsCommand}"  Margin="5, 5, 0, -4" />
-                    <Button Content="Sales" Style="{StaticResource ActiveRoundButtonStyle}"  Margin="2, 5, 5, -4" />
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="3"
+                            HorizontalAlignment="Right">
+                    <Button Content="Products"
+                            Style="{StaticResource RoundButtonStyle}"
+                            Command="{Binding GoToProductsCommand}"
+                            Margin="5, 5, 0, -4" />
+                    <Button Content="Sales"
+                            Style="{StaticResource ActiveRoundButtonStyle}"  
+                            Margin="2, 5, 5, -4" />
                 </StackPanel>
             </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Style="{StaticResource SalesButtonStyle}"
+                        Content="Refresh data"
+                        HorizontalAlignment="Left"
+                        Margin="5" />
+                <Button Grid.Column="1"
+                        Style="{StaticResource SalesButtonStyle}"
+                        Content="Export data"
+                        HorizontalAlignment="Right"
+                        Margin="5" />
+
+            </Grid>
+            <ListView Grid.Row="1"
+                  ItemsSource="{Binding Sales}" 
+                  BorderThickness="0"
+                  Width="{Binding ActualWidth,
+                                  Converter={StaticResource IntegerMinusConverter},
+                                  ConverterParameter=30,
+                                  RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=1}}"
+                  Height="{Binding ActualHeight,
+                                   Converter={StaticResource IntegerMinusConverter},
+                                   ConverterParameter=20,
+                                   RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=1}}">
+                <i:Interaction.Behaviors>
+                    <b:ScrollListViewBehavior />
+                </i:Interaction.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <cc:SaleItemControl SoldAt="{Binding SoldAt}"
+                                                Products="{Binding Products}"
+                                                Total="{Binding TotalValue}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
 
     </Grid>

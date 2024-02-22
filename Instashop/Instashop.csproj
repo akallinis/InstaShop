@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\chevron-sign-down.png" />
+    <None Remove="Resources\Images\chevron-sign-up.png" />
     <None Remove="Resources\Images\no-image-icon.png" />
   </ItemGroup>
 
@@ -33,6 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\chevron-sign-down.png" />
+    <Resource Include="Resources\Images\chevron-sign-up.png" />
     <Resource Include="Resources\Images\no-image-icon.png" />
   </ItemGroup>
 
