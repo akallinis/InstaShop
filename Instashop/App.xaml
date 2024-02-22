@@ -121,7 +121,6 @@
         </Style>
 
         <Style x:Key="LoginTextBox" TargetType="TextBox">
-            <Setter Property="Margin" Value="0,0,0,3"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Background" Value="{StaticResource Light}"/>
             <Setter Property="Foreground" Value="{StaticResource Dark}"/>
@@ -130,8 +129,19 @@
             <Setter Property="Height" Value="20"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="LoginPasswordBox" TargetType="PasswordBox">
+            <Setter Property="Margin" Value="0,0,0,3"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="{StaticResource Light}"/>
+            <Setter Property="Foreground" Value="{StaticResource Dark}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
 
         <Style x:Key="LoginLabel" TargetType="Label">

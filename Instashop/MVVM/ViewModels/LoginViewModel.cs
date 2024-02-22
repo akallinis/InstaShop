@@ -35,14 +35,18 @@ public class LoginViewModel : BaseViewModel
     public LoginViewModel(IStoreManager storeManager, INavigationService navService)
         : base(storeManager, navService)
     {
-        Username = "TestUser";
-        Password = "TestPassword";
     }
 
     #region commands
     public ICommand LoginCommand { get => new AsyncRelayCommand(async () => await LoginAsync()); }
     private async Task LoginAsync()
     {
+        if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+        {
+            MessageBox.Show("Either username or password was empty, please fill in the required fields and try again", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+
         var response = await _storeManager.LoginAsync(Username, Password);
 
         if (response.Errors.Any())
