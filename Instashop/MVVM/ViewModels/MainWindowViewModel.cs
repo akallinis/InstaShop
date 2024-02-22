@@ -1,6 +1,5 @@
 ﻿using Instashop.Core;
 using Instashop.Services.Interfaces;
-using MediatR;
 
 namespace Instashop.MVVM.ViewModels;
 

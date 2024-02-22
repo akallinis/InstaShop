@@ -1,5 +1,4 @@
 ﻿using Instashop.Services.Interfaces;
-using MediatR;
 
 namespace Instashop.Core;
 

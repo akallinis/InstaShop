@@ -1,7 +1,5 @@
-﻿
-using Instashop.Handlers.API.Login;
+﻿using Instashop.Handlers.API.Login;
 using Instashop.Handlers.API.Products;
-using Shared.Responses.Interfaces;
 
 namespace Instashop.Services.Interfaces;
 

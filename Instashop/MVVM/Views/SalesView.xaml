@@ -61,6 +61,7 @@
                         Margin="5" />
                 <Button Grid.Column="1"
                         Style="{StaticResource SalesButtonStyle}"
+                        Command="{Binding ExportDataCommand}"
                         Content="Export data"
                         HorizontalAlignment="Right"
                         Margin="5" />

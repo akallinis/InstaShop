@@ -1,5 +1,4 @@
-﻿using Instashop.MVVM.Models;
-using Instashop.MVVM.Models.BindingTargets;
+﻿using Instashop.MVVM.Models.BindingTargets;
 using Instashop.Services.Interfaces;
 using Shared.Responses.Factories;
 using Shared.Responses.Interfaces;

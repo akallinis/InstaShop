@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Windows.Automation;
 using System.Windows.Data;
 
 namespace Instashop.Converters;

@@ -1,5 +1,4 @@
-﻿
-namespace Instashop.MVVM.Models.BindingTargets;
+﻿namespace Instashop.MVVM.Models.BindingTargets;
 
 public class SalesData
 {

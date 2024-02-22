@@ -1,7 +1,5 @@
 ﻿using Instashop.Core;
-using Instashop.Handlers.API.Login;
 using Instashop.Services.Interfaces;
-using MediatR;
 using System.Windows;
 using System.Windows.Input;
 

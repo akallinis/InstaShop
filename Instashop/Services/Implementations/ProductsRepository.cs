@@ -3,11 +3,6 @@ using Instashop.MVVM.Models;
 using Instashop.Services.Interfaces;
 using Shared.Responses.Factories;
 using Shared.Responses.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Instashop.Services.Implementations;
 
