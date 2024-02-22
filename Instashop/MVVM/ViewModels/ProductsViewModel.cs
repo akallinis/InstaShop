@@ -29,7 +29,7 @@ public class ProductsViewModel : BaseViewModel
             _selectedProduct = value;
             OnPropertyChanged();
 
-            ClearSelectionButtonText = _selectedProduct != null ? $"Clear ({_selectedProduct.Name})" : "Clear ()";
+            
             if (_selectedProduct != null)
                 Task.Run(async () => await GetDetailsForProduct(_selectedProduct.Id));
         }
@@ -158,6 +158,7 @@ public class ProductsViewModel : BaseViewModel
         if (response == null || response.Data == null)
             return;
 
+        ClearSelectionButtonText = _selectedProduct != null ? $"Clear ({_selectedProduct.Name})" : "Clear ()";
         DetailsImage = string.IsNullOrEmpty(response.Data.Image) ? string.Empty : response.Data.Image;
         DetailsDescription = string.IsNullOrEmpty(response.Data.Description) ? string.Empty : response.Data.Description;
         DetailsBrand = string.IsNullOrEmpty(response.Data.Brand) ? string.Empty : response.Data.Brand;

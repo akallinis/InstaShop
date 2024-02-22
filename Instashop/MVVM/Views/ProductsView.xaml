@@ -62,22 +62,21 @@
                       SelectedItem="{Binding SelectedProduct}"
                       ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       Height="{Binding ActualHeight,
-                                Converter={StaticResource IntegerMinusConverter},
-                                ConverterParameter=20,
-                                RelativeSource={RelativeSource AncestorType={x:Type Border}}}"
+                                       Converter={StaticResource IntegerMinusConverter},
+                                       ConverterParameter=20,
+                                       RelativeSource={RelativeSource AncestorType={x:Type Border}}}"
                       Width="{Binding ActualWidth,
                                       Converter={StaticResource IntegerMinusConverter},
                                       ConverterParameter=50,
-                                      RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
-                                      d:ItemsSource="{d:SampleData ItemCount=5}">
+                                      RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border Style="{StaticResource RoundCornerBorderListItem}" 
                                         Width="{Binding ActualWidth, 
-                                        Converter={StaticResource IntegerMinusConverter}, 
-                                        ConverterParameter=40, 
-                                        RelativeSource={RelativeSource AncestorType={x:Type ListView}}}">
-                                    <Grid HorizontalAlignment="Center" 
+                                                        Converter={StaticResource IntegerMinusConverter}, 
+                                                        ConverterParameter=40, 
+                                                        RelativeSource={RelativeSource AncestorType={x:Type ListView}}}">   
+                                <Grid HorizontalAlignment="Center" 
                                           Width="{Binding ActualWidth, 
                                                           Converter={StaticResource IntegerMinusConverter},
                                                           ConverterParameter=30,
@@ -104,7 +103,7 @@
                     </ListView>
             </Border>
             <Button Content="{Binding ClearSelectionButtonText}"
-                    Style="{StaticResource LoginBtn}"
+                    Style="{StaticResource ClearBtn}"
                     Command="{Binding ClearSelectedProductCommand}"
                     IsEnabled="{Binding DetailsVisible}" />
 
@@ -115,7 +114,7 @@
                                     Converter={StaticResource IntegerMinusConverter},
                                     ConverterParameter=40,
                                     RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
-                    Height="450">
+                    Height="222">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Border Style="{StaticResource RounderCornerBorder}"
@@ -125,7 +124,20 @@
                                             Converter={StaticResource UrlToImageSourceConverter}}" 
                                    Width="180" />
                         </Border>
-                        <Label Content="{Binding DetailsDescription}" />
+                        <StackPanel  Margin="10,0" >
+                            <Label Content="{Binding DetailsBrand}" 
+                                   Style="{StaticResource LoginLabel}"
+                                   Margin="0,10"/>
+                            <TextBlock Text="{Binding DetailsDescription}"
+                                       Style="{StaticResource ExpanderGridText}"
+                                       Margin="0,10"/>
+                            <TextBlock Text="{Binding DetailsPackaging, StringFormat='Packaging: {0}'}"
+                                       Style="{StaticResource ExpanderGridText}"
+                                       Margin="0,10"/>
+                            <TextBlock Text="{Binding DetailsStock, StringFormat='Stock: {0}'}"
+                                       Style="{StaticResource ExpanderGridText}"
+                                       Margin="0,10"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Border>

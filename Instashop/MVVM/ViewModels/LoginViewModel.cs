@@ -58,6 +58,7 @@ public class LoginViewModel : BaseViewModel
             MessageBoxResult result;
 
             result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            return;
         }
 
         NavService.NavigateTo<ProductsViewModel>();

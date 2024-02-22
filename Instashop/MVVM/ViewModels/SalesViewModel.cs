@@ -12,6 +12,18 @@ public class SalesViewModel : BaseViewModel
     private readonly IExportDataService _exportDataService;
 
     #region properties
+    private bool _exportEnabled;
+
+    public bool ExportEnabled
+    {
+        get => _exportEnabled;
+        set
+        {
+            _exportEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
     private ObservableCollection<Sale> _sales;
     public ObservableCollection<Sale> Sales
     {
@@ -19,6 +31,7 @@ public class SalesViewModel : BaseViewModel
         set
         {
             _sales = value;
+            ExportEnabled = value != null && value.Count() > 0;
             OnPropertyChanged();
         }
     }
@@ -62,17 +75,14 @@ public class SalesViewModel : BaseViewModel
     private string ShowSaveFileDialog()
     {
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        saveFileDialog.FileName = $"Instashop_Sales_{DateTime.Now.ToString("MM-dd-yyyy")}"; // Default file name
-        saveFileDialog.DefaultExt = "xlsx"; // Default file extension
-        saveFileDialog.Filter = $"Text files (*.xlsx)|*.xlsx|All files (*.*)|*.*"; // Filter files by extension
+        saveFileDialog.FileName = $"Instashop_Sales_{DateTime.Now.ToString("MM-dd-yyyy")}";
+        saveFileDialog.DefaultExt = "xlsx";
+        saveFileDialog.Filter = $"Text files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
 
-        // Show save file dialog box
         bool? result = saveFileDialog.ShowDialog();
 
-        // Process save file dialog box results
         if (result == true)
         {
-            // Return the selected file name
             return saveFileDialog.FileName;
         }
         else

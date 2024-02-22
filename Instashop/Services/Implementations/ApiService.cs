@@ -43,7 +43,7 @@ public class ApiService : IApiService
         }
         catch (HttpRequestException httpEx)
         {
-            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed, continuing without connection"));
+            return DataResponseFactory.CreateExceptionResult(new Exception("Access to internet failed"));
         }
         catch (Exception ex)
         {
